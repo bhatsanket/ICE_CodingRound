@@ -5,8 +5,8 @@ namespace Engine
 {
     public class TickerSource1 : ITickerSource
     {
-        private Dictionary<string, double> Ticker = new Dictionary<string, double>();
-        private Random random = new Random();
+        private readonly Dictionary<string, double> Ticker = new();
+        private readonly Random random = new();
 
         public TickerSource1()
         {
@@ -25,7 +25,7 @@ namespace Engine
             }
         }
 
-        public void removeTicker(string tikr)
+        public void RemoveTicker(string tikr)
         {
             if (Ticker.ContainsKey(tikr))
             {

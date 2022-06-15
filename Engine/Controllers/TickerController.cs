@@ -33,16 +33,16 @@ namespace Engine.Controllers
         [Route("StartEngine")]
         public async Task StartEngine(string source)
         {
-            if (source == "Engine 1")
-            {
+            //if (source == "Engine 1")
+            //{
                 System.Threading.CancellationToken cancellationToken = new System.Threading.CancellationToken();
                 await worker.StartAsync(cancellationToken);
-            }
-            if (source == "Engine 2")
-            {
-                System.Threading.CancellationToken cancellationToken = new System.Threading.CancellationToken();
-                await worker.StartAsync(cancellationToken);
-            }
+            //}
+            //if (source == "Engine 2")
+            //{
+            //    System.Threading.CancellationToken cancellationToken = new System.Threading.CancellationToken();
+            //    await worker.StartAsync(cancellationToken);
+            //}
             return;
         }
 
@@ -55,9 +55,9 @@ namespace Engine.Controllers
             return;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("Subscribe")]
-        public void Subscribe(string tickr)
+        public void Subscribe([FromBody] string tickr)
         {
             tickerSource.addTicker(tickr);
             return;

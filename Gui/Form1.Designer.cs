@@ -37,7 +37,7 @@ namespace Gui
             this.bttn_addticker = new System.Windows.Forms.Button();
             this.tickerGrid = new System.Windows.Forms.DataGridView();
             this.engineGrid = new System.Windows.Forms.DataGridView();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.bttn_refresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tickerGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.engineGrid)).BeginInit();
@@ -53,7 +53,7 @@ namespace Gui
             this.button1.TabIndex = 0;
             this.button1.Text = "Start";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.Click += new System.EventHandler(this.Button1_ClickAsync);
             // 
             // button2
             // 
@@ -65,13 +65,16 @@ namespace Gui
             this.button2.TabIndex = 1;
             this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_ClickAsync);
             // 
             // txtbx_inputticker
             // 
             this.txtbx_inputticker.Location = new System.Drawing.Point(311, 59);
             this.txtbx_inputticker.Name = "txtbx_inputticker";
+            this.txtbx_inputticker.PlaceholderText = "Add ticker";
             this.txtbx_inputticker.Size = new System.Drawing.Size(100, 23);
             this.txtbx_inputticker.TabIndex = 4;
+            this.txtbx_inputticker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // bttn_addticker
             // 
@@ -81,7 +84,7 @@ namespace Gui
             this.bttn_addticker.TabIndex = 5;
             this.bttn_addticker.Text = "Subscribe";
             this.bttn_addticker.UseVisualStyleBackColor = true;
-            this.bttn_addticker.Click += new System.EventHandler(this.bttn_addticker_Click);
+            this.bttn_addticker.Click += new System.EventHandler(this.bttn_addticker_ClickAsync);
             // 
             // tickerGrid
             // 
@@ -112,15 +115,22 @@ namespace Gui
             this.engineGrid.Size = new System.Drawing.Size(144, 229);
             this.engineGrid.TabIndex = 7;
             // 
-            // backgroundWorker1
+            // bttn_refresh
             // 
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.bttn_refresh.Location = new System.Drawing.Point(311, 139);
+            this.bttn_refresh.Name = "bttn_refresh";
+            this.bttn_refresh.Size = new System.Drawing.Size(100, 23);
+            this.bttn_refresh.TabIndex = 8;
+            this.bttn_refresh.Text = "Refresh";
+            this.bttn_refresh.UseVisualStyleBackColor = true;
+            this.bttn_refresh.Click += new System.EventHandler(this.bttn_refresh_Click);
             // 
             // frm_TickerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(620, 356);
+            this.Controls.Add(this.bttn_refresh);
             this.Controls.Add(this.engineGrid);
             this.Controls.Add(this.tickerGrid);
             this.Controls.Add(this.bttn_addticker);
@@ -146,7 +156,7 @@ namespace Gui
         private System.Windows.Forms.Button bttn_addticker;
         private System.Windows.Forms.DataGridView tickerGrid;
         private System.Windows.Forms.DataGridView engineGrid;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button bttn_refresh;
     }
 }
 

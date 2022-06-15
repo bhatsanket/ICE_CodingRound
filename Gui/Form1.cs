@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,33 +13,34 @@ namespace Gui
 {
     public partial class frm_TickerForm : Form
     {
-        BindingList<TickerObj> tickerList = new BindingList<TickerObj>();
-        BindingList<Engine> engines = new BindingList<Engine>();
-        private EngineManager engineManager;
+        readonly BindingList<TickerObj> tickerList = new();
+        readonly BindingList<Engine> engines = new();
+        static readonly HttpClient client = new();
 
         public frm_TickerForm()
         {
             InitializeComponent();
 
-            loadInitialList();
-             engineManager = new EngineManager();
+            LoadInitialList();
 
+            client.BaseAddress = new Uri("https://localhost:45130/ticker/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        private void loadInitialList()
+        private void LoadInitialList()
         {
 
-            engines.Add(new Engine { name = "Engine 1", running = false });
-            engines.Add(new Engine { name = "Engine 2", running = false });
+            engines.Add(new Engine { name = "Engine 1", running = false, State = "Stopped" });
+            engines.Add(new Engine { name = "Engine 2", running = false, State = "Stopped" });
             engineGrid.DataSource = engines;
             engineGrid.MultiSelect = false;
 
-            //tickerList.Add(new TickerObj { name = "aapl", price = 10.0 });
-            //tickerList.Add(new TickerObj { name = "ice", price = 10.0 });
             tickerGrid.DataSource = tickerList;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void Button1_ClickAsync(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in engineGrid.SelectedRows)
             {
@@ -47,28 +49,64 @@ namespace Gui
                 {
                     selectedengine.running = true;
                     selectedengine.State = "Running";
+                    await client.GetStringAsync("StartEngine");
+                    await GetEngineData();//TODO pass engine name to start
+
                 }
             }
             engineGrid.Refresh();
         }
 
-        private void bttn_addticker_Click(object sender, EventArgs e)
+        private async Task GetEngineData()
         {
-            tickerList.Add(new TickerObj { name = txtbx_inputticker.Text, price = 0.0 });
+            tickerList.Clear();
+
+            foreach (var engine in engines.Where(e => e.running))
+            {
+                var response = await client.GetStringAsync("");
+                var data = JsonConvert.DeserializeObject<Dictionary<string, double>>(response);
+                foreach (var kv in data)
+                {
+                    if (!tickerList.Any(x => x.name == kv.Key))
+                    {
+                        tickerList.Add(new TickerObj { name = kv.Key, price = kv.Value });
+                    }
+                }
+            }
         }
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private async void bttn_addticker_ClickAsync(object sender, EventArgs e)
         {
-            //foreach (var engine in engines)
-            //{
-            //    engineManager.getLatestUpdateFromEngine(engine);
-            //}
+            if (!string.IsNullOrWhiteSpace(txtbx_inputticker.Text))
+            {
+                await client.PostAsJsonAsync("Subscribe", txtbx_inputticker.Text);
+                await GetEngineData();
+                txtbx_inputticker.Text = "";
+            }
+        }
+
+        private async void button2_ClickAsync(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in engineGrid.SelectedRows)
+            {
+                Engine selectedengine = (Engine)row.DataBoundItem;
+                if (selectedengine.running)
+                {
+                    selectedengine.running = false;
+                    selectedengine.State = "Stopped";
+                    await client.GetStringAsync("StopEngine");
+                    tickerList.Clear();
+                }
+            }
+            engineGrid.Refresh();
+        }
+
+        private async void bttn_refresh_Click(object sender, EventArgs e)
+        {
+            await GetEngineData();
         }
     }
 
-    internal class EngineManager
-    {
-    }
 
     internal class Engine
     {
