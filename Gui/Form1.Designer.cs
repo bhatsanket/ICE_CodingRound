@@ -38,6 +38,7 @@ namespace Gui
             this.tickerGrid = new System.Windows.Forms.DataGridView();
             this.engineGrid = new System.Windows.Forms.DataGridView();
             this.bttn_refresh = new System.Windows.Forms.Button();
+            this.title = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tickerGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.engineGrid)).BeginInit();
@@ -125,11 +126,22 @@ namespace Gui
             this.bttn_refresh.UseVisualStyleBackColor = true;
             this.bttn_refresh.Click += new System.EventHandler(this.bttn_refresh_Click);
             // 
+            // title
+            // 
+            this.title.AutoSize = true;
+            this.title.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.title.Location = new System.Drawing.Point(12, 13);
+            this.title.Name = "title";
+            this.title.Size = new System.Drawing.Size(191, 37);
+            this.title.TabIndex = 9;
+            this.title.Text = "Ticker Viewer";
+            // 
             // frm_TickerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(620, 356);
+            this.Controls.Add(this.title);
             this.Controls.Add(this.bttn_refresh);
             this.Controls.Add(this.engineGrid);
             this.Controls.Add(this.tickerGrid);
@@ -157,6 +169,7 @@ namespace Gui
         private System.Windows.Forms.DataGridView tickerGrid;
         private System.Windows.Forms.DataGridView engineGrid;
         private System.Windows.Forms.Button bttn_refresh;
+        private System.Windows.Forms.Label title;
     }
 }
 
