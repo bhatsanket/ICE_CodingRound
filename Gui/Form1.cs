@@ -32,8 +32,8 @@ namespace Gui
         private void LoadInitialList()
         {
 
-            engines.Add(new Engine { name = "Engine 1", running = false, State = "Stopped" });
-            engines.Add(new Engine { name = "Engine 2", running = false, State = "Stopped" });
+            engines.Add(new Engine { Name = "Engine 1", running = false, State = "Stopped" });
+            engines.Add(new Engine { Name = "Engine 2", running = false, State = "Stopped" });
             engineGrid.DataSource = engines;
             engineGrid.MultiSelect = false;
 
@@ -67,15 +67,15 @@ namespace Gui
                 var data = JsonConvert.DeserializeObject<Dictionary<string, double>>(response);
                 foreach (var kv in data)
                 {
-                    if (!tickerList.Any(x => x.name == kv.Key))
+                    if (!tickerList.Any(x => x.Name == kv.Key))
                     {
-                        tickerList.Add(new TickerObj { name = kv.Key, price = kv.Value });
+                        tickerList.Add(new TickerObj { Name = kv.Key, Price = kv.Value });
                     }
                 }
             }
         }
 
-        private async void bttn_addticker_ClickAsync(object sender, EventArgs e)
+        private async void Bttn_addticker_ClickAsync(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtbx_inputticker.Text))
             {
@@ -85,7 +85,7 @@ namespace Gui
             }
         }
 
-        private async void button2_ClickAsync(object sender, EventArgs e)
+        private async void Button2_ClickAsync(object sender, EventArgs e)
         {
             foreach (DataGridViewRow row in engineGrid.SelectedRows)
             {
@@ -101,7 +101,7 @@ namespace Gui
             engineGrid.Refresh();
         }
 
-        private async void bttn_refresh_Click(object sender, EventArgs e)
+        private async void Bttn_refresh_Click(object sender, EventArgs e)
         {
             await GetEngineData();
         }
@@ -113,13 +113,13 @@ namespace Gui
     {
         internal bool running;
 
-        public string name { get; internal set; }
+        public string Name { get; internal set; }
         public string State { get; internal set; }
     }
 
     public class TickerObj
     {
-        public string name { get; internal set; }
-        public double price { get; internal set; }
+        public string Name { get; internal set; }
+        public double Price { get; internal set; }
     }
 }

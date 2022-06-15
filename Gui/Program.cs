@@ -19,8 +19,6 @@ namespace Gui
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var services = new ServiceCollection();
-
             Application.Run(new frm_TickerForm());
         }
     }

@@ -66,7 +66,7 @@ namespace Gui
             this.button2.TabIndex = 1;
             this.button2.Text = "Stop";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_ClickAsync);
+            this.button2.Click += new System.EventHandler(this.Button2_ClickAsync);
             // 
             // txtbx_inputticker
             // 
@@ -85,7 +85,7 @@ namespace Gui
             this.bttn_addticker.TabIndex = 5;
             this.bttn_addticker.Text = "Subscribe";
             this.bttn_addticker.UseVisualStyleBackColor = true;
-            this.bttn_addticker.Click += new System.EventHandler(this.bttn_addticker_ClickAsync);
+            this.bttn_addticker.Click += new System.EventHandler(this.Bttn_addticker_ClickAsync);
             // 
             // tickerGrid
             // 
@@ -124,7 +124,7 @@ namespace Gui
             this.bttn_refresh.TabIndex = 8;
             this.bttn_refresh.Text = "Refresh";
             this.bttn_refresh.UseVisualStyleBackColor = true;
-            this.bttn_refresh.Click += new System.EventHandler(this.bttn_refresh_Click);
+            this.bttn_refresh.Click += new System.EventHandler(this.Bttn_refresh_Click);
             // 
             // title
             // 

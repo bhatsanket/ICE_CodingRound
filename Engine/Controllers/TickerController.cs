@@ -12,13 +12,11 @@ namespace Engine.Controllers
     [Route("[controller]")]
     public class TickerController : ControllerBase
     {
-        private readonly ILogger<TickerController> _logger;
         private readonly Worker worker;
         private readonly ITickerSource tickerSource;
 
-        public TickerController(ILogger<TickerController> logger, Worker worker, ITickerSource tickerSource)
+        public TickerController(Worker worker, ITickerSource tickerSource)
         {
-            _logger = logger;
             this.worker = worker;
             this.tickerSource = tickerSource;
         }
